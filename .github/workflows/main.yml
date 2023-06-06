@@ -1,4 +1,4 @@
-name: "Network testing"
+name: "Test, build and push"
 
 on:
     workflow_dispatch:
