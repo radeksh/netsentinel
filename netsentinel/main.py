@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
+import os, json
 import asyncio
 import time, subprocess
 import netifaces, ipaddress
 from prometheus_client import start_http_server, Gauge
 
-SCAN_INTERVAL = 60
+SCAN_INTERVAL = os.environ.get("SCAN_INTERVAL", 60)
 
 connected_devices = []
 device_gauge = Gauge('device_connected', 'Network devices state ', ['ip', 'hostname'])
@@ -16,7 +17,7 @@ async def resolve_device_hostname(ip):
     except FileNotFoundError:
         exit("Package avahi-resolve not found. Please install avahi-utils.")
     output, errors = await process.communicate()
-    return {"ip": ip, "hostname": output.decode("utf-8").split("\t")[1].strip("\n").split(".")[0] if output else None}
+    return {"ip": ip, "hostname": output.decode("utf-8").split("\t")[1].strip("\n").split(".")[0] if output else "unknown"}
 
 
 async def get_network_devices_states(network):
@@ -64,12 +65,13 @@ def update_device_gauge(devices_status):
 
 
 if __name__ == "__main__":
-    start_http_server(65535)
+    start_http_server(os.environ.get("PROMETHEUS_PORT", 65535))
     network = get_network_from_default_gateway()
     loop = asyncio.get_event_loop()
 
     while True:
         devices_status = loop.run_until_complete(get_network_devices_states(network))
-        #print(devices_status)
+        if os.environ.get("DEBUG") == "true":
+            print(json.dumps(devices_status, indent=4))
         update_device_gauge(devices_status)
         time.sleep(SCAN_INTERVAL)

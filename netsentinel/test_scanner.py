@@ -1,15 +1,15 @@
 import os
 import pytest
 
-from netsentinel.code.scanner import get_network_from_default_gateway
+from netsentinel.main import get_network_from_default_gateway
 
 
 def test_get_network_from_default_gateway():
-    """ This test would only run if you have test network defined in your environment variable.
-        Otherwise it is difficult to simple check what network you are using.
+    """ This test will only work if you have TEST_NETWORK defined in your environment variable.
+        Otherwise it is difficult to simple check what network you are using without duplicating
+        tested function.
     """
-    if test_network_cidr := os.environ.get('TEST_NETWORK', None):
-        assert get_network_from_default_gateway() == test_network_cidr
+    assert get_network_from_default_gateway() == os.environ.get('TEST_NETWORK', get_network_from_default_gateway())
 
 
 @pytest.mark.device_joined
