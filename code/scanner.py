@@ -46,7 +46,7 @@ async def get_network_devices_states(network):
     return {"joined": joined_devices, "left": left_devices}
 
 
-def get_default_gateway():
+def get_network_from_default_gateway():
     gateways = netifaces.gateways()
     interface = gateways['default'][netifaces.AF_INET][1]
     interfaces = netifaces.ifaddresses(interface)
@@ -65,7 +65,7 @@ def update_device_gauge(devices_status):
 
 if __name__ == "__main__":
     start_http_server(65535)
-    network = get_default_gateway()
+    network = get_network_from_default_gateway()
     loop = asyncio.get_event_loop()
 
     while True:
