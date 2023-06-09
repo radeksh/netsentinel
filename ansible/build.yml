@@ -1,0 +1,51 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: Add sentinel user
+    user:
+      name: sentinel
+      shell: /bin/false
+      state: present
+      system: yes
+
+  - name: Install system packages
+    apt:
+      state: present
+      update_cache: yes
+      pkg:
+      - dkms
+      - linux-headers
+
+  - name: Clone Wi-Fi adapter (AWUS036ACH) driver repository
+    git:
+      repo: https://github.com/aircrack-ng/rtl8812au
+      dest: /usr/src/rtl8812au
+
+  - name: Install driver
+    shell: |
+      cd /usr/src/rtl8812au
+      sudo make dkms_install
+
+  - name: Clone Sentinel repository
+    git:
+      repo: https://github.com/radeksh/netsentinel
+      dest: /usr/src/netsentinel
+
+  - name: Install Sentinel
+    shell: |
+      cd /usr/src/netsentinel
+      sudo make install
+
+  - name: Install Sentinel service
+    copy:
+      src: sentinel.service
+      dest: /etc/systemd/system/sentinel.service
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: Enable Sentinel service
+    systemd:
+      name: sentinel
+      state: started
+      enabled: yes

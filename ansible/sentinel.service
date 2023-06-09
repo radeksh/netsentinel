@@ -1,0 +1,12 @@
+[Unit]
+Description=Sentinel Service
+After=network.target
+
+[Service]
+ExecStart=/srv/sentinel/venv/bin/python /usr/local/bin/sentinel
+WorkingDirectory=/srv/sentinel
+Restart=always
+User=sentinel
+
+[Install]
+WantedBy=multi-user.target
