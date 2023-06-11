@@ -1,8 +1,8 @@
-# NetSentinel
+# Sentinel
 
-![NetSentinel](https://static.wikia.nocookie.net/robotsupremacy/images/0/08/Squiddy.jpg "NetSentinel in action")
+![Sentinel](https://static.wikia.nocookie.net/robotsupremacy/images/0/08/Squiddy.jpg "Sentinel in action")
 
-This program delves into the depths of your network, tirelessly scanning for arrivals and departures of devices like a vigilant guardian. With the power of mDNS, NetSentinel decrypts the elusive identities of each device, unraveling their presence amidst the sea of IP addresses. As the network pulses with life, NetSentinel's vigilant whispers deliver real-time notifications waiting for Prometheus pulling data, empowering you to harness the ever-shifting currents of information and fortify your digital realm.
+This program delves into the depths of your network, tirelessly scanning for arrivals and departures of devices like a vigilant guardian. With the power of mDNS, Sentinel decrypts the elusive identities of each device, unraveling their presence amidst the sea of IP addresses. As the network pulses with life, Sentinel's vigilant whispers deliver real-time notifications waiting for Prometheus pulling data, empowering you to harness the ever-shifting currents of information and fortify your digital realm.
 
 **_Use at your own risk._**
 
@@ -19,7 +19,7 @@ This program delves into the depths of your network, tirelessly scanning for arr
 1. Run as docker container connected to host network.
 
     ```
-    docker run -e DEBUG=true -it --network=host radeksh/netsentinel
+    docker run -e DEBUG=true -it --network=host radeksh/sentinel
     ```
 
 ### Without docker
@@ -28,12 +28,12 @@ This program delves into the depths of your network, tirelessly scanning for arr
 
     ```
     $ sudo apt install nmap avahi-utils
-    $ pip install -r netsentinel/requirements.txt
+    $ pip install -r sentinel/requirements.txt
     ```
 
 1. Run
 
     ```
-    $ cd netsentinel
+    $ cd sentinel
     $ ./main.py
     ```

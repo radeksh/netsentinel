@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from netsentinel.main import get_network_from_default_gateway
+from sentinel.main import get_network_from_default_gateway
 
 
 def test_get_network_from_default_gateway():

@@ -28,12 +28,12 @@
 
   - name: Clone Sentinel repository
     git:
-      repo: https://github.com/radeksh/netsentinel
-      dest: /usr/src/netsentinel
+      repo: https://github.com/radeksh/sentinel
+      dest: /usr/src/sentinel
 
   - name: Install Sentinel
     shell: |
-      cd /usr/src/netsentinel
+      cd /usr/src/sentinel
       sudo make install
 
   - name: Install Sentinel service
